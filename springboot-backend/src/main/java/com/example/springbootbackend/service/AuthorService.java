@@ -27,4 +27,13 @@ public class AuthorService {
 
 	}
 
+	public Author saveAuhtor(Author author, Long id) {
+		return authorRepository.save(author);
+	}
+
+	public Integer updateAuthors(String lastName, Long id) {
+		return authorRepository.save(lastName, id);
+
+	}
+
 }

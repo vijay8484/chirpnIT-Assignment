@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springbootbackend.model.Author;
@@ -29,6 +34,18 @@ public class AuthorBookController {
 	@GetMapping(value = "/getAllAuthors")
 	public List<Author> getAuthors() {
 		return authorService.getAuthors();
+	}
+
+	@PutMapping("/authors/{id}")
+	public ResponseEntity<?> saveAuthor(@RequestBody Author author, @PathVariable("id") Long id) {
+		Author newAuthor = authorService.saveAuhtor(author, id);
+		return new ResponseEntity<>(newAuthor, HttpStatus.OK);
+	}
+
+	@PatchMapping("/authors/{id}")
+	public Integer updateAuthor(@RequestParam("lastName") String lastName, @PathVariable("id") Long id) {
+		return authorService.updateAuthors(lastName, id);
+
 	}
 
 	@PostMapping(value = "/createAuthor", consumes = MediaType.APPLICATION_JSON_VALUE)
